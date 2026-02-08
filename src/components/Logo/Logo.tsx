@@ -1,5 +1,7 @@
+'use client'
+
 import clsx from 'clsx'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 interface Props {
   className?: string
@@ -12,6 +14,24 @@ export const Logo = (props: Props) => {
 
   const loading = loadingFromProps || 'lazy'
   const priority = priorityFromProps || 'low'
+  
+  const [isDarkTheme, setIsDarkTheme] = useState(false)
+
+  useEffect(() => {
+    // Check for dark theme preference
+    const checkTheme = () => {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      setIsDarkTheme(prefersDark)
+    }
+    
+    checkTheme()
+    
+    // Listen for theme changes
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    mediaQuery.addEventListener('change', checkTheme)
+    
+    return () => mediaQuery.removeEventListener('change', checkTheme)
+  }, [])
 
   return (
     /* eslint-disable @next/next/no-img-element */
@@ -23,7 +43,7 @@ export const Logo = (props: Props) => {
       fetchPriority={priority}
       decoding="async"
       className={clsx('max-w-[9.375rem] w-full h-[34px]', className)}
-      src="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-logo-light.svg"
+      src={!isDarkTheme ? "/dark.png" : "/light.png"}
     />
   )
 }
