@@ -16,6 +16,8 @@ import { getServerSideURL } from '@/utilities/getURL'
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
   return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
 }
+import { s3Storage } from '@payloadcms/storage-s3'; // Importing S3 storage plugin
+
 
 const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
   const url = getServerSideURL()
@@ -87,6 +89,23 @@ export const plugins: Plugin[] = [
       fields: ({ defaultFields }) => {
         return [...defaultFields, ...searchFields]
       },
+    },
+  }),
+   s3Storage({
+    collections: {
+      media: {
+        prefix: 'media',
+      },
+    },  
+    bucket: process.env.S3_BUCKET || '',
+    config: {
+      forcePathStyle: true,
+      credentials: {
+        accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
+        secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
+      },
+      region: process.env.S3_REGION || '',
+      endpoint: process.env.S3_ENDPOINT || '',
     },
   }),
 ]
