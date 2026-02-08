@@ -7,6 +7,7 @@ import {
   lexicalEditor,
   UnderlineFeature,
   type LinkFields,
+  TextStateFeature,
 } from '@payloadcms/richtext-lexical'
 
 export const defaultLexical = lexicalEditor({
@@ -42,6 +43,40 @@ export const defaultLexical = lexicalEditor({
           },
         ]
       },
+    }),
+    TextStateFeature({
+      // prettier-ignore
+      state: {
+    color: {
+      // Default colors from Payload
+      // Additional custom colors
+      galaxy: { label: 'Galaxy', css: { background: 'linear-gradient(to right, #0000ff, #ff0000)', color: 'white' } },
+      sunset: { label: 'Sunset', css: { background: 'linear-gradient(to top, #ff5f6d, #6a3093)' } },
+      ocean: { label: 'Ocean', css: { background: 'linear-gradient(to right, #00d2ff, #3a7bd5)', color: 'white' } },
+      forest: { label: 'Forest', css: { background: 'linear-gradient(to right, #2d5016, #5b9d48)', color: 'white' } },
+      fire: { label: 'Fire', css: { background: 'linear-gradient(to right, #ff416c, #ff4b2b)', color: 'white' } },
+      twilight: { label: 'Twilight', css: { background: 'linear-gradient(to right, #4b6cb7, #182848)', color: 'white' } },
+      // Solid colors
+      'text-red': { label: 'Red', css: { color: 'light-dark(#dc2626, #ef4444)' } },
+      'text-orange': { label: 'Orange', css: { color: 'light-dark(#ea580c, #f97316)' } },
+      'text-yellow': { label: 'Yellow', css: { color: 'light-dark(#a16207, #eab308)' } },
+      'text-green': { label: 'Green', css: { color: 'light-dark(#166534, #22c55e)' } },
+      'text-blue': { label: 'Blue', css: { color: 'light-dark(#1e40af, #3b82f6)' } },
+      'text-purple': { label: 'Purple', css: { color: 'light-dark(#5b21b6, #a855f7)' } },
+      'text-pink': { label: 'Pink', css: { color: 'light-dark(#9d174d, #ec4899)' } },
+      'text-gray': { label: 'Gray', css: { color: 'light-dark(#374151, #9ca3af)' } },
+      'text-black': { label: 'Black', css: { color: 'light-dark(#000000, #ffffff)' } },
+      'text-white': { label: 'White', css: { color: 'light-dark(#ffffff, #000000)' } },
+    },
+    // You can have both colored and underlined text at the same time.
+    // If you don't want that, you should group them within the same key.
+    // (just like I did with defaultColors and my fancy gradients)
+    underline: {
+      'solid': { label: 'Solid', css: { 'text-decoration': 'underline', 'text-underline-offset': '4px' } },
+       // You'll probably want to use the CSS light-dark() utility.
+      'yellow-dashed': { label: 'Yellow Dashed', css: { 'text-decoration': 'underline dashed', 'text-decoration-color': 'light-dark(#EAB308,yellow)', 'text-underline-offset': '4px' } },
+    },
+  },
     }),
   ],
 })
