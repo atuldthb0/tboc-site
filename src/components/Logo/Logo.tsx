@@ -17,12 +17,12 @@ export const Logo = (props: Props) => {
   const priority = priorityFromProps || 'low'
   
   // Determine which logo variant to use based on theme
-  // The logo should contrast with the header theme for visibility
+  // The logo should match the theme for consistency
   const getLogoSrc = () => {
     if (theme === 'dark') {
-      return "/dark.png" // Dark logo for dark header (dark backgrounds)
+      return "/dark.png" // Dark logo for dark theme
     } else if (theme === 'light') {
-      return "/light.png" // Light logo for light header (light backgrounds)
+      return "/light.png" // Light logo for light theme
     } else {
       // Fallback to system preference - but handle SSR properly
       // For SSR, we'll default to light.png to match the typical light theme
@@ -30,6 +30,7 @@ export const Logo = (props: Props) => {
         return "/light.png"
       }
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      // When system has dark theme, use dark logo
       return prefersDark ? "/dark.png" : "/light.png"
     }
   }
@@ -37,7 +38,7 @@ export const Logo = (props: Props) => {
   return (
     /* eslint-disable @next/next/no-img-element */
     <img
-      alt="Payload Logo"
+      alt="Tboc Logo"
       width={193}
       height={34}
       loading={loading}

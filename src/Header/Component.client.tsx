@@ -33,8 +33,12 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
 
   // Update header theme when site theme changes, except for specific pages
   useEffect(() => {
-    if (siteTheme && !headerTheme) {
+    if (siteTheme) {
       setTheme(siteTheme)
+    } else {
+      // If no site theme, use system preference
+      const prefersDark = typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches
+      setTheme(prefersDark ? 'dark' : 'light')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [siteTheme])
