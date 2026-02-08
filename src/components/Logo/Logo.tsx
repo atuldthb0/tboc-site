@@ -25,8 +25,9 @@ export const Logo = (props: Props) => {
       return "/light.png" // Light logo for light theme
     } else {
       // Fallback to system preference - but handle SSR properly
-      // For SSR, we'll default to light.png to match the typical light theme
       if (typeof window === 'undefined') {
+        // For SSR, we can't detect system preference, so we need to be consistent
+        // Let's default to light.png for SSR to match typical light theme
         return "/light.png"
       }
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches

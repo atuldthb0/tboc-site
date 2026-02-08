@@ -16,7 +16,14 @@ interface HeaderClientProps {
 
 export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   /* Storing the value in a useState to avoid hydration errors */
-  const [theme, setTheme] = useState<'dark' | 'light' | null>(null)
+  // Initialize with system preference to match client-side behavior
+  const [theme, setTheme] = useState<'dark' | 'light' | null>(() => {
+    if (typeof window !== 'undefined') {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      return prefersDark ? 'dark' : 'light'
+    }
+    return null
+  })
   const { headerTheme, setHeaderTheme } = useHeaderTheme()
   const { theme: siteTheme } = useTheme()
   const pathname = usePathname()
@@ -38,10 +45,22 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
     } else {
       // If no site theme, use system preference
       const prefersDark = typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches
-      setTheme(prefersDark ? 'dark' : 'light')
+      const systemTheme = prefersDark ? 'dark' : 'light'
+      setTheme(systemTheme)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [siteTheme])
+
+  // Ensure we always have a theme value to prevent hydration mismatch
+  useEffect(() => {
+    if (theme === null || theme === undefined) {
+      // Fallback to system preference
+      const prefersDark = typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches
+      const systemTheme = prefersDark ? 'dark' : 'light'
+      setTheme(systemTheme)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <header className="container relative z-20   " {...(theme ? { 'data-theme': theme } : {})}>
