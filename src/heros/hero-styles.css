@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Hero-specific Poppins font styling */
+.high-impact-hero,
+.medium-impact-hero,
+.low-impact-hero,
+.post-hero {
+  font-family: 'Poppins', sans-serif;
+}
+
+.high-impact-hero h1,
+.high-impact-hero h2,
+.high-impact-hero h3,
+.high-impact-hero h4,
+.high-impact-hero h5,
+.high-impact-hero h6,
+.high-impact-hero p,
+.high-impact-hero span,
+.high-impact-hero a,
+.high-impact-hero div,
+.medium-impact-hero h1,
+.medium-impact-hero h2,
+.medium-impact-hero h3,
+.medium-impact-hero h4,
+.medium-impact-hero h5,
+.medium-impact-hero h6,
+.medium-impact-hero p,
+.medium-impact-hero span,
+.medium-impact-hero a,
+.medium-impact-hero div,
+.low-impact-hero h1,
+.low-impact-hero h2,
+.low-impact-hero h3,
+.low-impact-hero h4,
+.low-impact-hero h5,
+.low-impact-hero h6,
+.low-impact-hero p,
+.low-impact-hero span,
+.low-impact-hero a,
+.low-impact-hero div,
+.post-hero h1,
+.post-hero h2,
+.post-hero h3,
+.post-hero h4,
+.post-hero h5,
+.post-hero h6,
+.post-hero p,
+.post-hero span,
+.post-hero a,
+.post-hero div {
+  font-family: 'Poppins', sans-serif;
+}
