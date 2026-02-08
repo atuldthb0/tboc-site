@@ -24,8 +24,12 @@ export const Logo = (props: Props) => {
     } else if (theme === 'light') {
       return "/light.png" // Light logo for light header (light backgrounds)
     } else {
-      // Fallback to system preference
-      const prefersDark = typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches
+      // Fallback to system preference - but handle SSR properly
+      // For SSR, we'll default to light.png to match the typical light theme
+      if (typeof window === 'undefined') {
+        return "/light.png"
+      }
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
       return prefersDark ? "/dark.png" : "/light.png"
     }
   }

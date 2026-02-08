@@ -12,7 +12,8 @@ const PageClient: React.FC = () => {
     if (pathname === '/') {
       setHeaderTheme('dark')
     } else {
-      setHeaderTheme('light')
+      // Other pages depend on theme - no dark image behind header
+      setHeaderTheme(null)
     }
   }, [setHeaderTheme, pathname])
   
