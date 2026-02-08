@@ -40,7 +40,10 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
 
   // Update header theme when site theme changes, except for specific pages
   useEffect(() => {
-    if (siteTheme) {
+    // Home page always has dark theme regardless of site theme
+    if (pathname === '/') {
+      setTheme('dark')
+    } else if (siteTheme) {
       setTheme(siteTheme)
     } else {
       // If no site theme, use system preference
@@ -49,7 +52,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
       setTheme(systemTheme)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [siteTheme])
+  }, [siteTheme, pathname])
 
   // Ensure we always have a theme value to prevent hydration mismatch
   useEffect(() => {

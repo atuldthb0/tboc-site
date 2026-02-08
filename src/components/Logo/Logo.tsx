@@ -2,6 +2,7 @@
 
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 
 interface Props {
   className?: string
@@ -12,6 +13,7 @@ interface Props {
 
 export const Logo = (props: Props) => {
   const { loading: loadingFromProps, priority: priorityFromProps, className, theme } = props
+  const pathname = usePathname()
 
   const loading = loadingFromProps || 'lazy'
   const priority = priorityFromProps || 'low'
@@ -19,6 +21,11 @@ export const Logo = (props: Props) => {
   // Determine which logo variant to use based on theme
   // The logo should match the theme for consistency
   const getLogoSrc = () => {
+    // Home page always shows dark logo regardless of theme
+    if (pathname === '/') {
+      return "/dark.png"
+    }
+
     if (theme === 'dark') {
       return "/dark.png" // Dark logo for dark theme
     } else if (theme === 'light') {
