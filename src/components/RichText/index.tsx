@@ -4,6 +4,7 @@ import {
   SerializedBlockNode,
   SerializedLinkNode,
   type DefaultTypedEditorState,
+  SerializedTextNode,
 } from '@payloadcms/richtext-lexical'
 import {
   JSXConvertersFunction,
@@ -35,9 +36,83 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   return relationTo === 'posts' ? `/posts/${slug}` : `/${slug}`
 }
 
+// Custom text node converter to handle color styles
+const TextNodeConverter = ({ node }: { node: SerializedTextNode }) => {
+  const { text, format, style, $ } = node
+  
+  // Check if text has color formatting in $ object (Lexical format)
+  if ($ && $.color) {
+    const colorClass = $.color
+    
+    // Map color classes to exact CSS styles from the editor configuration
+    const colorStyles = {
+      'red': { color: '#ff0000' },
+      'orange': { color: '#ea580c' }, 
+      'yellow': { color: '#a16207' },
+      'green': { color: '#166534' },
+      'blue': { color: '#1e40af' },
+      'purple': { color: '#5b21b6' },
+      'pink': { color: '#9d174d' },
+      'gray': { color: '#374151' },
+      'black': { color: '#000000' },
+      'white': { color: '#ffffff' },
+      'galaxy': { 
+        background: 'linear-gradient(to right, #0000ff, #ff0000)',
+        color: 'white',
+        padding: '2px 4px',
+        borderRadius: '4px'
+      },
+      'sunset': { 
+        background: 'linear-gradient(to top, #ff5f6d, #6a3093)',
+        padding: '2px 4px',
+        borderRadius: '4px'
+      },
+      'ocean': { 
+        background: 'linear-gradient(to right, #00d2ff, #3a7bd5)',
+        color: 'white',
+        padding: '2px 4px',
+        borderRadius: '4px'
+      },
+      'forest': { 
+        background: 'linear-gradient(to right, #2d5016, #5b9d48)',
+        color: 'white',
+        padding: '2px 4px',
+        borderRadius: '4px'
+      },
+      'fire': { 
+        background: 'linear-gradient(to right, #ff416c, #ff4b2b)',
+        color: 'white',
+        padding: '2px 4px',
+        borderRadius: '4px'
+      },
+      'twilight': { 
+        background: 'linear-gradient(to right, #4b6cb7, #182848)',
+        color: 'white',
+        padding: '2px 4px',
+        borderRadius: '4px'
+      },
+    }
+    
+    const styleObj = colorStyles[colorClass as keyof typeof colorStyles]
+    
+    if (styleObj) {
+      return <span style={styleObj}>{text}</span>
+    }
+  }
+  
+  // Check if text has color formatting in style attribute (fallback)
+  if (style && style.includes('color:')) {
+    return <span style={{ color: style.match(/color:\s*([^;]+)/)?.[1] }}>{text}</span>
+  }
+  
+  // Default text rendering
+  return <span>{text}</span>
+}
+
 const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
   ...defaultConverters,
   ...LinkJSXConverter({ internalDocToHref }),
+  text: TextNodeConverter,
   blocks: {
     banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
     mediaBlock: ({ node }) => (

@@ -7,6 +7,7 @@ import {
   lexicalEditor,
   UnderlineFeature,
   type LinkFields,
+  defaultColors,
   TextStateFeature,
 } from '@payloadcms/richtext-lexical'
 
@@ -57,16 +58,16 @@ export const defaultLexical = lexicalEditor({
       fire: { label: 'Fire', css: { background: 'linear-gradient(to right, #ff416c, #ff4b2b)', color: 'white' } },
       twilight: { label: 'Twilight', css: { background: 'linear-gradient(to right, #4b6cb7, #182848)', color: 'white' } },
       // Solid colors
-      'text-red': { label: 'Red', css: { color: 'light-dark(#dc2626, #ef4444)' } },
-      'text-orange': { label: 'Orange', css: { color: 'light-dark(#ea580c, #f97316)' } },
-      'text-yellow': { label: 'Yellow', css: { color: 'light-dark(#a16207, #eab308)' } },
-      'text-green': { label: 'Green', css: { color: 'light-dark(#166534, #22c55e)' } },
-      'text-blue': { label: 'Blue', css: { color: 'light-dark(#1e40af, #3b82f6)' } },
-      'text-purple': { label: 'Purple', css: { color: 'light-dark(#5b21b6, #a855f7)' } },
-      'text-pink': { label: 'Pink', css: { color: 'light-dark(#9d174d, #ec4899)' } },
-      'text-gray': { label: 'Gray', css: { color: 'light-dark(#374151, #9ca3af)' } },
-      'text-black': { label: 'Black', css: { color: 'light-dark(#000000, #ffffff)' } },
-      'text-white': { label: 'White', css: { color: 'light-dark(#ffffff, #000000)' } },
+      red: { label: 'Red', css: { color: 'light-dark(#dc2626, #ef4444)' } },
+      orange: { label: 'Orange', css: { color: 'light-dark(#ea580c, #f97316)' } },
+      yellow: { label: 'Yellow', css: { color: 'light-dark(#a16207, #eab308)' } },
+      green: { label: 'Green', css: { color: 'light-dark(#166534, #22c55e)' } },
+      blue: { label: 'Blue', css: { color: 'light-dark(#1e40af, #3b82f6)' } },
+      purple: { label: 'Purple', css: { color: 'light-dark(#5b21b6, #a855f7)' } },
+      pink: { label: 'Pink', css: { color: 'light-dark(#9d174d, #ec4899)' } },
+      gray: { label: 'Gray', css: { color: 'light-dark(#374151, #9ca3af)' } },
+      black: { label: 'Black', css: { color: 'light-dark(#000000, #ffffff)' } },
+      white: { label: 'White', css: { color: 'light-dark(#ffffff, #000000)' } },
     },
     // You can have both colored and underlined text at the same time.
     // If you don't want that, you should group them within the same key.
