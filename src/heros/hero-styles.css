@@ -8,6 +8,136 @@
   font-family: 'Poppins', sans-serif;
 }
 
+/* DEBUG: Add outline to hero sections for testing */
+/* Uncomment below to see hero section boundaries */
+/*
+.high-impact-hero,
+.medium-impact-hero,
+.low-impact-hero,
+.post-hero {
+  outline: 2px dashed magenta;
+}
+*/
+
+/* Red hover effect for hero buttons - Black/White/Red theme */
+.hero-button:hover,
+.high-impact-hero button:hover,
+.medium-impact-hero button:hover,
+.low-impact-hero button:hover,
+.post-hero button:hover,
+.high-impact-hero [data-slot='button']:hover,
+.medium-impact-hero [data-slot='button']:hover,
+.low-impact-hero [data-slot='button']:hover,
+.post-hero [data-slot='button']:hover,
+.high-impact-hero a:hover,
+.medium-impact-hero a:hover,
+.low-impact-hero a:hover,
+.post-hero a:hover,
+.high-impact-hero [role='button']:hover,
+.medium-impact-hero [role='button']:hover,
+.low-impact-hero [role='button']:hover,
+.post-hero [role='button']:hover {
+  background-color: oklch(65% 0.25 25) !important;
+  color: white !important;
+}
+
+/* Ultimate fallback - target any clickable element in heroes */
+.high-impact-hero [onclick]:hover,
+.medium-impact-hero [onclick]:hover,
+.low-impact-hero [onclick]:hover,
+.post-hero [onclick]:hover,
+.high-impact-hero [tabindex='0']:hover,
+.medium-impact-hero [tabindex='0']:hover,
+.low-impact-hero [tabindex='0']:hover,
+.post-hero [tabindex='0']:hover {
+  background-color: oklch(65% 0.25 25) !important;
+  color: white !important;
+}
+
+/* Ensure outline buttons also get red hover */
+.hero-button:hover,
+.high-impact-hero .outline-button:hover,
+.medium-impact-hero .outline-button:hover,
+.low-impact-hero .outline-button:hover,
+.post-hero .outline-button:hover {
+  background-color: oklch(65% 0.25 25) !important;
+  color: white !important;
+  border-color: oklch(65% 0.25 25) !important;
+}
+
+/* Specific styling for hero buttons */
+.hero-button {
+  transition: all 0.3s ease;
+}
+
+.hero-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Force red color for hero buttons regardless of variant */
+.hero-button,
+.high-impact-hero [data-slot='button'],
+.medium-impact-hero [data-slot='button'],
+.low-impact-hero [data-slot='button'],
+.post-hero [data-slot='button'],
+.high-impact-hero a[href],
+.medium-impact-hero a[href],
+.low-impact-hero a[href],
+.post-hero a[href] {
+  --button-accent: oklch(65% 0.25 25);
+  --button-accent-foreground: white;
+  --ring-color: oklch(65% 0.25 25);
+}
+
+/* Ensure the red color is used in hover states */
+.hero-button:hover,
+.high-impact-hero [data-slot='button']:hover,
+.medium-impact-hero [data-slot='button']:hover,
+.low-impact-hero [data-slot='button']:hover,
+.post-hero [data-slot='button']:hover,
+.high-impact-hero a[href]:hover,
+.medium-impact-hero a[href]:hover,
+.low-impact-hero a[href]:hover,
+.post-hero a[href]:hover {
+  background-color: var(--button-accent) !important;
+  color: var(--button-accent-foreground) !important;
+  border-color: var(--button-accent) !important;
+}
+
+/* Target Radix UI button slots specifically */
+.high-impact-hero [data-slot='button'] {
+  --accent: var(--button-accent);
+  --accent-foreground: var(--button-accent-foreground);
+}
+
+/* Target any button-like element in heroes */
+.high-impact-hero button,
+.medium-impact-hero button,
+.low-impact-hero button,
+.post-hero button,
+.high-impact-hero [role='button'],
+.medium-impact-hero [role='button'],
+.low-impact-hero [role='button'],
+.post-hero [role='button'] {
+  --accent: oklch(65% 0.25 25);
+  --accent-foreground: white;
+}
+
+/* Force hover states to use our red */
+.high-impact-hero button:hover,
+.medium-impact-hero button:hover,
+.low-impact-hero button:hover,
+.post-hero button:hover,
+.high-impact-hero [role='button']:hover,
+.medium-impact-hero [role='button']:hover,
+.low-impact-hero [role='button']:hover,
+.post-hero [role='button']:hover {
+  background-color: oklch(65% 0.25 25) !important;
+  color: white !important;
+  border-color: oklch(65% 0.25 25) !important;
+}
+
 .high-impact-hero h1,
 .high-impact-hero h2,
 .high-impact-hero h3,
