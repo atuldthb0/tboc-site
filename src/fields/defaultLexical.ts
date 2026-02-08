@@ -7,7 +7,6 @@ import {
   lexicalEditor,
   UnderlineFeature,
   type LinkFields,
-  defaultColors,
   TextStateFeature,
 } from '@payloadcms/richtext-lexical'
 
