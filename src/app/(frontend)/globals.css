@@ -222,3 +222,18 @@ html[data-theme='dark'],
 html[data-theme='light'] {
   opacity: initial;
 }
+
+/* Logo filter to invert colors while preserving red */
+.logo-filter {
+  filter: invert(1) brightness(1.2);
+}
+
+/* Override for dark theme - no filter needed */
+html[data-theme='dark'] .logo-filter {
+  filter: none;
+}
+
+/* Override when header theme is explicitly set to dark */
+[data-theme='dark'] .logo-filter {
+  filter: none;
+}

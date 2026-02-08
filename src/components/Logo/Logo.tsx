@@ -7,31 +7,28 @@ interface Props {
   className?: string
   loading?: 'lazy' | 'eager'
   priority?: 'auto' | 'high' | 'low'
+  theme?: 'dark' | 'light' | null
 }
 
 export const Logo = (props: Props) => {
-  const { loading: loadingFromProps, priority: priorityFromProps, className } = props
+  const { loading: loadingFromProps, priority: priorityFromProps, className, theme } = props
 
   const loading = loadingFromProps || 'lazy'
   const priority = priorityFromProps || 'low'
   
-  const [isDarkTheme, setIsDarkTheme] = useState(false)
-
-  useEffect(() => {
-    // Check for dark theme preference
-    const checkTheme = () => {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      setIsDarkTheme(prefersDark)
+  // Determine which logo variant to use based on theme
+  // The logo should contrast with the header theme for visibility
+  const getLogoSrc = () => {
+    if (theme === 'dark') {
+      return "/dark.png" // Dark logo for dark header (dark backgrounds)
+    } else if (theme === 'light') {
+      return "/light.png" // Light logo for light header (light backgrounds)
+    } else {
+      // Fallback to system preference
+      const prefersDark = typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches
+      return prefersDark ? "/dark.png" : "/light.png"
     }
-    
-    checkTheme()
-    
-    // Listen for theme changes
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    mediaQuery.addEventListener('change', checkTheme)
-    
-    return () => mediaQuery.removeEventListener('change', checkTheme)
-  }, [])
+  }
 
   return (
     /* eslint-disable @next/next/no-img-element */
@@ -43,7 +40,7 @@ export const Logo = (props: Props) => {
       fetchPriority={priority}
       decoding="async"
       className={clsx('max-w-[9.375rem] w-full h-[34px]', className)}
-      src={!isDarkTheme ? "/dark.png" : "/light.png"}
+      src={getLogoSrc()}
     />
   )
 }
