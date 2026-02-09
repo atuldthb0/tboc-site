@@ -3,9 +3,36 @@
 import Link from 'next/link'
 import React from 'react'
 
-import type { BigDreamCTA as BigDreamCTAType } from '@/payload-types'
+import type { Media } from '@/payload-types'
+import { TypeWithID } from 'payload'
 
-export const BigDreamCTA: React.FC<BigDreamCTAType> = ({
+interface TrustIndicator {
+  value: string
+  label: string
+}
+
+interface Headline {
+  firstLine: string
+  secondLine: string
+}
+
+interface CTAButton {
+  label: string
+  url: string
+}
+
+interface BigDreamCTABlockProps {
+  blockType: 'bigDreamCTA'
+  blockName?: string
+  backgroundImage: TypeWithID & Media
+  trustIndicators: TrustIndicator[]
+  companyTag: string
+  headline: Headline
+  supportingText: string
+  ctaButton: CTAButton
+}
+
+export const BigDreamCTA: React.FC<BigDreamCTABlockProps> = ({
   backgroundImage,
   trustIndicators,
   companyTag,
