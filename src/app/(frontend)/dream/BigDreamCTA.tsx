@@ -36,36 +36,42 @@ export default function BigDreamCTA() {
 
       {/* Content Container */}
       <div className="relative z-10 max-w-7xl w-full px-6 md:px-16 lg:px-24">
-        <div className="ml-auto max-w-[40rem] text-right pr-4 md:pr-12 lg:pr-16">
+        {/* Mobile: shift content up, keep to right, limit width to avoid red band */}
+        <div className="ml-auto w-[70%] sm:w-[65%] md:max-w-[40rem] text-right pr-4 sm:pr-6 md:pr-12 lg:pr-16 
+                        -mt-16 sm:-mt-12 md:mt-0">
           
           {/* Company Tag */}
           <div className="mb-4 md:mb-8">
-            <span className="text-white/60 text-xs md:text-base font-light tracking-[0.2em] uppercase">
+            <span className="text-white/60 text-xs sm:text-sm md:text-base font-light tracking-[0.2em] uppercase">
               The Big O Company
             </span>
           </div>
 
           {/* Main Headline */}
           <h1 className="text-white mb-6 md:mb-12">
-            <span className="block text-4xl md:text-7xl lg:text-8xl font-bold leading-[1.1] mb-1">
+            <span className="block text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] mb-1">
               The Dream
             </span>
-            <span className="block text-4xl md:text-7xl lg:text-8xl font-bold leading-[1.1] relative">
+            <span className="block text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] relative">
               Project
               {/* Red accent underline */}
-              <span className="absolute bottom-0 -right-4 md:-right-12 lg:-right-12 w-24 md:w-40 lg:w-48 h-1 bg-red-500"></span>
+              <span className="absolute bottom-0 -right-2 sm:-right-4 md:-right-12 lg:-right-12 
+                             w-20 sm:w-28 md:w-40 lg:w-48 h-1 bg-red-500"></span>
             </span>
           </h1>
 
           {/* Supporting Text */}
-          <p className="text-white/90 text-sm md:text-xl lg:text-2xl font-light leading-relaxed mb-8 md:mb-14 max-w-xs md:max-w-xl ml-auto">
+          <p className="text-white/90 text-sm sm:text-base md:text-xl lg:text-2xl font-light leading-relaxed 
+                        mb-18 md:mb-14 ml-auto">
             Your vision, our expertise. We&apos;re here for you with the bold solutions 
             and unwavering support you need.
           </p>
 
           {/* CTA Button */}
           <div className="flex justify-end mb-8 md:mb-0">
-            <button className="group relative px-6 md:px-12 py-3 md:py-6 text-sm md:text-lg font-semibold tracking-wide overflow-hidden transition-all duration-300 border-2 border-white text-white hover:text-white">
+            <button className="group relative px-5 sm:px-8 md:px-12 py-3 sm:py-4 md:py-6 
+                             text-sm sm:text-base md:text-lg font-semibold tracking-wide 
+                             overflow-hidden transition-all duration-300 border-2 border-white text-white hover:text-white">
               {/* Button background that slides in on hover */}
               <span className="absolute inset-0 bg-red-500 transform translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></span>
               
@@ -92,16 +98,16 @@ export default function BigDreamCTA() {
           {/* Mobile Stats - Horizontal Row */}
           <div className="md:hidden flex justify-end gap-6 text-white mt-8">
             <div className="text-center">
-              <div className="text-white font-semibold text-xl">100+</div>
-              <div className="text-white/60 text-xs">Projects</div>
+              <div className="text-white font-semibold text-xl sm:text-2xl">100+</div>
+              <div className="text-white/60 text-xs sm:text-sm">Projects</div>
             </div>
             <div className="text-center">
-              <div className="text-white font-semibold text-xl">24/7</div>
-              <div className="text-white/60 text-xs">Support</div>
+              <div className="text-white font-semibold text-xl sm:text-2xl">24/7</div>
+              <div className="text-white/60 text-xs sm:text-sm">Support</div>
             </div>
             <div className="text-center">
-              <div className="text-white font-semibold text-xl">∞</div>
-              <div className="text-white/60 text-xs">Possibilities</div>
+              <div className="text-white font-semibold text-xl sm:text-2xl">∞</div>
+              <div className="text-white/60 text-xs sm:text-sm">Possibilities</div>
             </div>
           </div>
 
