@@ -18,27 +18,25 @@ export const Logo = (props: Props) => {
   const loading = loadingFromProps || 'lazy'
   const priority = priorityFromProps || 'low'
   
-  // Determine which logo variant to use based on theme
-  // The logo should match the theme for consistency
+  // Determine which logo variant to use based on theme and page context
+  // The logo should provide good contrast against the header background
   const getLogoSrc = () => {
-    // Home page always shows dark logo regardless of theme
+    // Home page has black hero section, so we need dark logo (with white text) for visibility
     if (pathname === '/') {
       return "/dark.png"
     }
 
     if (theme === 'dark') {
-      return "/dark.png" // Dark logo for dark theme
+      return "/dark.png" // Dark logo (white text) for dark theme (light navbar)
     } else if (theme === 'light') {
-      return "/light.png" // Light logo for light theme
+      return "/light.png" // Light logo (black text) for light theme (dark navbar)
     } else {
-      // Fallback to system preference - but handle SSR properly
+      // Auto theme: fallback to system preference
       if (typeof window === 'undefined') {
-        // For SSR, we can't detect system preference, so we need to be consistent
-        // Let's default to light.png for SSR to match typical light theme
+        // For SSR, default to light.png to match typical light theme
         return "/light.png"
       }
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      // When system has dark theme, use dark logo
       return prefersDark ? "/dark.png" : "/light.png"
     }
   }
