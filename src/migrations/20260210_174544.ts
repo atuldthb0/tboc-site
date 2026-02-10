@@ -11,6 +11,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum_pages_blocks_content_columns_link_appearance" AS ENUM('default', 'outline');
   CREATE TYPE "public"."enum_pages_blocks_archive_populate_by" AS ENUM('collection', 'selection');
   CREATE TYPE "public"."enum_pages_blocks_archive_relation_to" AS ENUM('posts');
+  CREATE TYPE "public"."enum_pages_blocks_logo_loop_direction" AS ENUM('left', 'right', 'up', 'down');
   CREATE TYPE "public"."enum_pages_hero_type" AS ENUM('none', 'highImpact', 'mediumImpact', 'lowImpact');
   CREATE TYPE "public"."enum_pages_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum__pages_v_version_hero_links_link_type" AS ENUM('reference', 'custom');
@@ -22,6 +23,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum__pages_v_blocks_content_columns_link_appearance" AS ENUM('default', 'outline');
   CREATE TYPE "public"."enum__pages_v_blocks_archive_populate_by" AS ENUM('collection', 'selection');
   CREATE TYPE "public"."enum__pages_v_blocks_archive_relation_to" AS ENUM('posts');
+  CREATE TYPE "public"."enum__pages_v_blocks_logo_loop_direction" AS ENUM('left', 'right', 'up', 'down');
   CREATE TYPE "public"."enum__pages_v_version_hero_type" AS ENUM('none', 'highImpact', 'mediumImpact', 'lowImpact');
   CREATE TYPE "public"."enum__pages_v_version_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum_posts_status" AS ENUM('draft', 'published');
@@ -43,6 +45,29 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_url" varchar,
   	"link_label" varchar,
   	"link_appearance" "enum_pages_hero_links_link_appearance" DEFAULT 'default'
+  );
+  
+  CREATE TABLE "pages_blocks_big_dream_c_t_a_trust_indicators" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"value" varchar,
+  	"label" varchar
+  );
+  
+  CREATE TABLE "pages_blocks_big_dream_c_t_a" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"background_image_id" integer,
+  	"company_tag" varchar DEFAULT 'The Big O Company',
+  	"headline_first_line" varchar DEFAULT 'The Dream',
+  	"headline_second_line" varchar DEFAULT 'Project',
+  	"supporting_text" varchar DEFAULT 'Your vision, our expertise. We''re here for you with the bold solutions and unwavering support you need.',
+  	"cta_button_label" varchar DEFAULT 'Let''s Build Together',
+  	"cta_button_url" varchar DEFAULT '#',
+  	"block_name" varchar
   );
   
   CREATE TABLE "pages_blocks_cta_links" (
@@ -119,6 +144,31 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_name" varchar
   );
   
+  CREATE TABLE "pages_blocks_logo_loop_logos" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"image_id" integer,
+  	"alt_text" varchar,
+  	"url" varchar,
+  	"title" varchar
+  );
+  
+  CREATE TABLE "pages_blocks_logo_loop" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"speed" numeric DEFAULT 120,
+  	"direction" "enum_pages_blocks_logo_loop_direction" DEFAULT 'left',
+  	"pause_on_hover" boolean DEFAULT true,
+  	"scale_on_hover" boolean DEFAULT true,
+  	"logo_height" numeric DEFAULT 28,
+  	"gap" numeric DEFAULT 32,
+  	"fade_out" boolean DEFAULT false,
+  	"block_name" varchar
+  );
+  
   CREATE TABLE "pages" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"title" varchar,
@@ -156,6 +206,31 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"link_label" varchar,
   	"link_appearance" "enum__pages_v_version_hero_links_link_appearance" DEFAULT 'default',
   	"_uuid" varchar
+  );
+  
+  CREATE TABLE "_pages_v_blocks_big_dream_c_t_a_trust_indicators" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"value" varchar,
+  	"label" varchar,
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE "_pages_v_blocks_big_dream_c_t_a" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"background_image_id" integer,
+  	"company_tag" varchar DEFAULT 'The Big O Company',
+  	"headline_first_line" varchar DEFAULT 'The Dream',
+  	"headline_second_line" varchar DEFAULT 'Project',
+  	"supporting_text" varchar DEFAULT 'Your vision, our expertise. We''re here for you with the bold solutions and unwavering support you need.',
+  	"cta_button_label" varchar DEFAULT 'Let''s Build Together',
+  	"cta_button_url" varchar DEFAULT '#',
+  	"_uuid" varchar,
+  	"block_name" varchar
   );
   
   CREATE TABLE "_pages_v_blocks_cta_links" (
@@ -235,6 +310,33 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"form_id" integer,
   	"enable_intro" boolean,
   	"intro_content" jsonb,
+  	"_uuid" varchar,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "_pages_v_blocks_logo_loop_logos" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"image_id" integer,
+  	"alt_text" varchar,
+  	"url" varchar,
+  	"title" varchar,
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE "_pages_v_blocks_logo_loop" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"speed" numeric DEFAULT 120,
+  	"direction" "enum__pages_v_blocks_logo_loop_direction" DEFAULT 'left',
+  	"pause_on_hover" boolean DEFAULT true,
+  	"scale_on_hover" boolean DEFAULT true,
+  	"logo_height" numeric DEFAULT 28,
+  	"gap" numeric DEFAULT 32,
+  	"fade_out" boolean DEFAULT false,
   	"_uuid" varchar,
   	"block_name" varchar
   );
@@ -347,6 +449,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"id" serial PRIMARY KEY NOT NULL,
   	"alt" varchar,
   	"caption" jsonb,
+  	"prefix" varchar DEFAULT 'media',
   	"folder_id" integer,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
@@ -798,6 +901,9 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   );
   
   ALTER TABLE "pages_hero_links" ADD CONSTRAINT "pages_hero_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_big_dream_c_t_a_trust_indicators" ADD CONSTRAINT "pages_blocks_big_dream_c_t_a_trust_indicators_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_big_dream_c_t_a"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_big_dream_c_t_a" ADD CONSTRAINT "pages_blocks_big_dream_c_t_a_background_image_id_media_id_fk" FOREIGN KEY ("background_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "pages_blocks_big_dream_c_t_a" ADD CONSTRAINT "pages_blocks_big_dream_c_t_a_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_cta_links" ADD CONSTRAINT "pages_blocks_cta_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_cta"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_cta" ADD CONSTRAINT "pages_blocks_cta_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_content_columns" ADD CONSTRAINT "pages_blocks_content_columns_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_content"("id") ON DELETE cascade ON UPDATE no action;
@@ -807,6 +913,9 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "pages_blocks_archive" ADD CONSTRAINT "pages_blocks_archive_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_form_block" ADD CONSTRAINT "pages_blocks_form_block_form_id_forms_id_fk" FOREIGN KEY ("form_id") REFERENCES "public"."forms"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "pages_blocks_form_block" ADD CONSTRAINT "pages_blocks_form_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_logo_loop_logos" ADD CONSTRAINT "pages_blocks_logo_loop_logos_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "pages_blocks_logo_loop_logos" ADD CONSTRAINT "pages_blocks_logo_loop_logos_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_logo_loop"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_logo_loop" ADD CONSTRAINT "pages_blocks_logo_loop_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages" ADD CONSTRAINT "pages_hero_media_id_media_id_fk" FOREIGN KEY ("hero_media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "pages" ADD CONSTRAINT "pages_meta_image_id_media_id_fk" FOREIGN KEY ("meta_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "pages_rels" ADD CONSTRAINT "pages_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
@@ -814,6 +923,9 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "pages_rels" ADD CONSTRAINT "pages_rels_posts_fk" FOREIGN KEY ("posts_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_rels" ADD CONSTRAINT "pages_rels_categories_fk" FOREIGN KEY ("categories_id") REFERENCES "public"."categories"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_version_hero_links" ADD CONSTRAINT "_pages_v_version_hero_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_big_dream_c_t_a_trust_indicators" ADD CONSTRAINT "_pages_v_blocks_big_dream_c_t_a_trust_indicators_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_big_dream_c_t_a"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_big_dream_c_t_a" ADD CONSTRAINT "_pages_v_blocks_big_dream_c_t_a_background_image_id_media_id_fk" FOREIGN KEY ("background_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_big_dream_c_t_a" ADD CONSTRAINT "_pages_v_blocks_big_dream_c_t_a_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_cta_links" ADD CONSTRAINT "_pages_v_blocks_cta_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_cta"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_cta" ADD CONSTRAINT "_pages_v_blocks_cta_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_content_columns" ADD CONSTRAINT "_pages_v_blocks_content_columns_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_content"("id") ON DELETE cascade ON UPDATE no action;
@@ -823,6 +935,9 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "_pages_v_blocks_archive" ADD CONSTRAINT "_pages_v_blocks_archive_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_form_block" ADD CONSTRAINT "_pages_v_blocks_form_block_form_id_forms_id_fk" FOREIGN KEY ("form_id") REFERENCES "public"."forms"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_form_block" ADD CONSTRAINT "_pages_v_blocks_form_block_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_logo_loop_logos" ADD CONSTRAINT "_pages_v_blocks_logo_loop_logos_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_logo_loop_logos" ADD CONSTRAINT "_pages_v_blocks_logo_loop_logos_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_logo_loop"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_logo_loop" ADD CONSTRAINT "_pages_v_blocks_logo_loop_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v" ADD CONSTRAINT "_pages_v_parent_id_pages_id_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."pages"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "_pages_v" ADD CONSTRAINT "_pages_v_version_hero_media_id_media_id_fk" FOREIGN KEY ("version_hero_media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "_pages_v" ADD CONSTRAINT "_pages_v_version_meta_image_id_media_id_fk" FOREIGN KEY ("version_meta_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
@@ -896,6 +1011,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "footer_rels" ADD CONSTRAINT "footer_rels_posts_fk" FOREIGN KEY ("posts_id") REFERENCES "public"."posts"("id") ON DELETE cascade ON UPDATE no action;
   CREATE INDEX "pages_hero_links_order_idx" ON "pages_hero_links" USING btree ("_order");
   CREATE INDEX "pages_hero_links_parent_id_idx" ON "pages_hero_links" USING btree ("_parent_id");
+  CREATE INDEX "pages_blocks_big_dream_c_t_a_trust_indicators_order_idx" ON "pages_blocks_big_dream_c_t_a_trust_indicators" USING btree ("_order");
+  CREATE INDEX "pages_blocks_big_dream_c_t_a_trust_indicators_parent_id_idx" ON "pages_blocks_big_dream_c_t_a_trust_indicators" USING btree ("_parent_id");
+  CREATE INDEX "pages_blocks_big_dream_c_t_a_order_idx" ON "pages_blocks_big_dream_c_t_a" USING btree ("_order");
+  CREATE INDEX "pages_blocks_big_dream_c_t_a_parent_id_idx" ON "pages_blocks_big_dream_c_t_a" USING btree ("_parent_id");
+  CREATE INDEX "pages_blocks_big_dream_c_t_a_path_idx" ON "pages_blocks_big_dream_c_t_a" USING btree ("_path");
+  CREATE INDEX "pages_blocks_big_dream_c_t_a_background_image_idx" ON "pages_blocks_big_dream_c_t_a" USING btree ("background_image_id");
   CREATE INDEX "pages_blocks_cta_links_order_idx" ON "pages_blocks_cta_links" USING btree ("_order");
   CREATE INDEX "pages_blocks_cta_links_parent_id_idx" ON "pages_blocks_cta_links" USING btree ("_parent_id");
   CREATE INDEX "pages_blocks_cta_order_idx" ON "pages_blocks_cta" USING btree ("_order");
@@ -917,6 +1038,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "pages_blocks_form_block_parent_id_idx" ON "pages_blocks_form_block" USING btree ("_parent_id");
   CREATE INDEX "pages_blocks_form_block_path_idx" ON "pages_blocks_form_block" USING btree ("_path");
   CREATE INDEX "pages_blocks_form_block_form_idx" ON "pages_blocks_form_block" USING btree ("form_id");
+  CREATE INDEX "pages_blocks_logo_loop_logos_order_idx" ON "pages_blocks_logo_loop_logos" USING btree ("_order");
+  CREATE INDEX "pages_blocks_logo_loop_logos_parent_id_idx" ON "pages_blocks_logo_loop_logos" USING btree ("_parent_id");
+  CREATE INDEX "pages_blocks_logo_loop_logos_image_idx" ON "pages_blocks_logo_loop_logos" USING btree ("image_id");
+  CREATE INDEX "pages_blocks_logo_loop_order_idx" ON "pages_blocks_logo_loop" USING btree ("_order");
+  CREATE INDEX "pages_blocks_logo_loop_parent_id_idx" ON "pages_blocks_logo_loop" USING btree ("_parent_id");
+  CREATE INDEX "pages_blocks_logo_loop_path_idx" ON "pages_blocks_logo_loop" USING btree ("_path");
   CREATE INDEX "pages_hero_hero_media_idx" ON "pages" USING btree ("hero_media_id");
   CREATE INDEX "pages_meta_meta_image_idx" ON "pages" USING btree ("meta_image_id");
   CREATE UNIQUE INDEX "pages_slug_idx" ON "pages" USING btree ("slug");
@@ -931,6 +1058,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "pages_rels_categories_id_idx" ON "pages_rels" USING btree ("categories_id");
   CREATE INDEX "_pages_v_version_hero_links_order_idx" ON "_pages_v_version_hero_links" USING btree ("_order");
   CREATE INDEX "_pages_v_version_hero_links_parent_id_idx" ON "_pages_v_version_hero_links" USING btree ("_parent_id");
+  CREATE INDEX "_pages_v_blocks_big_dream_c_t_a_trust_indicators_order_idx" ON "_pages_v_blocks_big_dream_c_t_a_trust_indicators" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_big_dream_c_t_a_trust_indicators_parent_id_idx" ON "_pages_v_blocks_big_dream_c_t_a_trust_indicators" USING btree ("_parent_id");
+  CREATE INDEX "_pages_v_blocks_big_dream_c_t_a_order_idx" ON "_pages_v_blocks_big_dream_c_t_a" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_big_dream_c_t_a_parent_id_idx" ON "_pages_v_blocks_big_dream_c_t_a" USING btree ("_parent_id");
+  CREATE INDEX "_pages_v_blocks_big_dream_c_t_a_path_idx" ON "_pages_v_blocks_big_dream_c_t_a" USING btree ("_path");
+  CREATE INDEX "_pages_v_blocks_big_dream_c_t_a_background_image_idx" ON "_pages_v_blocks_big_dream_c_t_a" USING btree ("background_image_id");
   CREATE INDEX "_pages_v_blocks_cta_links_order_idx" ON "_pages_v_blocks_cta_links" USING btree ("_order");
   CREATE INDEX "_pages_v_blocks_cta_links_parent_id_idx" ON "_pages_v_blocks_cta_links" USING btree ("_parent_id");
   CREATE INDEX "_pages_v_blocks_cta_order_idx" ON "_pages_v_blocks_cta" USING btree ("_order");
@@ -952,6 +1085,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "_pages_v_blocks_form_block_parent_id_idx" ON "_pages_v_blocks_form_block" USING btree ("_parent_id");
   CREATE INDEX "_pages_v_blocks_form_block_path_idx" ON "_pages_v_blocks_form_block" USING btree ("_path");
   CREATE INDEX "_pages_v_blocks_form_block_form_idx" ON "_pages_v_blocks_form_block" USING btree ("form_id");
+  CREATE INDEX "_pages_v_blocks_logo_loop_logos_order_idx" ON "_pages_v_blocks_logo_loop_logos" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_logo_loop_logos_parent_id_idx" ON "_pages_v_blocks_logo_loop_logos" USING btree ("_parent_id");
+  CREATE INDEX "_pages_v_blocks_logo_loop_logos_image_idx" ON "_pages_v_blocks_logo_loop_logos" USING btree ("image_id");
+  CREATE INDEX "_pages_v_blocks_logo_loop_order_idx" ON "_pages_v_blocks_logo_loop" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_logo_loop_parent_id_idx" ON "_pages_v_blocks_logo_loop" USING btree ("_parent_id");
+  CREATE INDEX "_pages_v_blocks_logo_loop_path_idx" ON "_pages_v_blocks_logo_loop" USING btree ("_path");
   CREATE INDEX "_pages_v_parent_idx" ON "_pages_v" USING btree ("parent_id");
   CREATE INDEX "_pages_v_version_hero_version_hero_media_idx" ON "_pages_v" USING btree ("version_hero_media_id");
   CREATE INDEX "_pages_v_version_meta_version_meta_image_idx" ON "_pages_v" USING btree ("version_meta_image_id");
@@ -1143,6 +1282,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
    DROP TABLE "pages_hero_links" CASCADE;
+  DROP TABLE "pages_blocks_big_dream_c_t_a_trust_indicators" CASCADE;
+  DROP TABLE "pages_blocks_big_dream_c_t_a" CASCADE;
   DROP TABLE "pages_blocks_cta_links" CASCADE;
   DROP TABLE "pages_blocks_cta" CASCADE;
   DROP TABLE "pages_blocks_content_columns" CASCADE;
@@ -1150,9 +1291,13 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "pages_blocks_media_block" CASCADE;
   DROP TABLE "pages_blocks_archive" CASCADE;
   DROP TABLE "pages_blocks_form_block" CASCADE;
+  DROP TABLE "pages_blocks_logo_loop_logos" CASCADE;
+  DROP TABLE "pages_blocks_logo_loop" CASCADE;
   DROP TABLE "pages" CASCADE;
   DROP TABLE "pages_rels" CASCADE;
   DROP TABLE "_pages_v_version_hero_links" CASCADE;
+  DROP TABLE "_pages_v_blocks_big_dream_c_t_a_trust_indicators" CASCADE;
+  DROP TABLE "_pages_v_blocks_big_dream_c_t_a" CASCADE;
   DROP TABLE "_pages_v_blocks_cta_links" CASCADE;
   DROP TABLE "_pages_v_blocks_cta" CASCADE;
   DROP TABLE "_pages_v_blocks_content_columns" CASCADE;
@@ -1160,6 +1305,8 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "_pages_v_blocks_media_block" CASCADE;
   DROP TABLE "_pages_v_blocks_archive" CASCADE;
   DROP TABLE "_pages_v_blocks_form_block" CASCADE;
+  DROP TABLE "_pages_v_blocks_logo_loop_logos" CASCADE;
+  DROP TABLE "_pages_v_blocks_logo_loop" CASCADE;
   DROP TABLE "_pages_v" CASCADE;
   DROP TABLE "_pages_v_rels" CASCADE;
   DROP TABLE "posts_populated_authors" CASCADE;
@@ -1217,6 +1364,7 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum_pages_blocks_content_columns_link_appearance";
   DROP TYPE "public"."enum_pages_blocks_archive_populate_by";
   DROP TYPE "public"."enum_pages_blocks_archive_relation_to";
+  DROP TYPE "public"."enum_pages_blocks_logo_loop_direction";
   DROP TYPE "public"."enum_pages_hero_type";
   DROP TYPE "public"."enum_pages_status";
   DROP TYPE "public"."enum__pages_v_version_hero_links_link_type";
@@ -1228,6 +1376,7 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum__pages_v_blocks_content_columns_link_appearance";
   DROP TYPE "public"."enum__pages_v_blocks_archive_populate_by";
   DROP TYPE "public"."enum__pages_v_blocks_archive_relation_to";
+  DROP TYPE "public"."enum__pages_v_blocks_logo_loop_direction";
   DROP TYPE "public"."enum__pages_v_version_hero_type";
   DROP TYPE "public"."enum__pages_v_version_status";
   DROP TYPE "public"."enum_posts_status";
