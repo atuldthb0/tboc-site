@@ -7,6 +7,7 @@ import { BigDreamCTA } from '../../blocks/BigDreamCTA/config'
 import { CallToAction } from '../../blocks/CallToAction/config'
 import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
+import { LogoLoop } from '../../blocks/LogoLoop/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
@@ -73,7 +74,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [BigDreamCTA, CallToAction, Content, MediaBlock, Archive, FormBlock],
+              blocks: [BigDreamCTA, CallToAction, Content, MediaBlock, Archive, FormBlock, LogoLoop],
               required: true,
               admin: {
                 initCollapsed: true,

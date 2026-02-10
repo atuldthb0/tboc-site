@@ -67,6 +67,7 @@ export interface Config {
   };
   blocks: {
     bigDreamCTA: BigDreamCTABlock;
+    logoLoop: LogoLoopBlock;
   };
   collections: {
     pages: Page;
@@ -299,6 +300,29 @@ export interface FolderInterface {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LogoLoopBlock".
+ */
+export interface LogoLoopBlock {
+  logos: {
+    image: number | Media;
+    altText: string;
+    url?: string | null;
+    title: string;
+    id?: string | null;
+  }[];
+  speed?: number | null;
+  direction?: ('left' | 'right' | 'up' | 'down') | null;
+  pauseOnHover?: boolean | null;
+  scaleOnHover?: boolean | null;
+  logoHeight?: number | null;
+  gap?: number | null;
+  fadeOut?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'logoLoop';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
 export interface Page {
@@ -347,7 +371,15 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (BigDreamCTABlock | CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (
+    | BigDreamCTABlock
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | LogoLoopBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -1117,6 +1149,7 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        logoLoop?: T | LogoLoopBlockSelect<T>;
       };
   meta?:
     | T
@@ -1243,6 +1276,30 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LogoLoopBlock_select".
+ */
+export interface LogoLoopBlockSelect<T extends boolean = true> {
+  logos?:
+    | T
+    | {
+        image?: T;
+        altText?: T;
+        url?: T;
+        title?: T;
+        id?: T;
+      };
+  speed?: T;
+  direction?: T;
+  pauseOnHover?: T;
+  scaleOnHover?: T;
+  logoHeight?: T;
+  gap?: T;
+  fadeOut?: T;
   id?: T;
   blockName?: T;
 }

@@ -7,6 +7,7 @@ import { BigDreamCTA } from '@/blocks/BigDreamCTA/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
 import { FormBlock } from '@/blocks/Form/Component'
+import { LogoLoopBlock } from '@/blocks/LogoLoop/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 
 const blockComponents = {
@@ -15,6 +16,7 @@ const blockComponents = {
   content: ContentBlock,
   cta: CallToActionBlock,
   formBlock: FormBlock,
+  logoLoop: LogoLoopBlock,
   mediaBlock: MediaBlock,
 }
 
